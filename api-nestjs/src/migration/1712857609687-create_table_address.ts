@@ -16,6 +16,7 @@ export class CreateAddressTable1618597945728 implements MigrationInterface {
                 created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW() NOT NULL,
                 updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW() NOT NULL,
                 FOREIGN KEY (user_id) REFERENCES public.user(id)
+                FOREIGN KEY (city_id) REFERENCES public.city(id)
             );
         `)
   }
