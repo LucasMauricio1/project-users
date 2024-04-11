@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common'
 import { UserModule } from './app/user/user.module'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { AddressModule } from './app/address/address.module';
-import { StateModule } from './app/state/state.module';
-import { CityModule } from './app/city/city.module';
+import { AddressModule } from './app/address/address.module'
+import { StateModule } from './app/state/state.module'
+import { CityModule } from './app/city/city.module'
 
 @Module({
   imports: [
