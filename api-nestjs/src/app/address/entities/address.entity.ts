@@ -14,7 +14,7 @@ export class AddressEntity {
   @Column({ name: 'user_id', nullable: false })
   userId: string
 
-  @Column({ nullable: false })
+  @Column()
   complement: string
 
   @Column({ nullable: false })
@@ -23,7 +23,7 @@ export class AddressEntity {
   @Column({ nullable: false })
   address: string
 
-  @Column({ nullable: false })
+  @Column()
   number: number
 
   @Column({ nullable: false })
