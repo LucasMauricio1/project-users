@@ -1,72 +1,37 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm'
+import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class CreateTableUser1712855499886 implements MigrationInterface {
+export class CreateUsersTable1618597945727 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.createTable(
-      new Table({
-        name: 'user',
-        columns: [
-          {
-            name: 'id',
-            type: 'uuid',
-            isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
-          },
-          {
-            name: 'name',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'cpf',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'type_user',
-            type: 'int',
-            isNullable: false,
-          },
-          {
-            name: 'sex',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'date_birth',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'marital_state',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'password',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'created_at',
-            type: 'timestamp',
-            default: 'now()',
-            isNullable: false,
-          },
-          {
-            name: 'updated_at',
-            type: 'timestamp',
-            default: 'now()',
-            isNullable: false,
-          },
-        ],
-      }),
-      true,
-    )
+    await queryRunner.query(`
+            CREATE TABLE IF NOT EXISTS public.user (
+                id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                name VARCHAR NOT NULL,
+                cpf VARCHAR NOT NULL,
+                sex VARCHAR NOT NULL,
+                date_birth VARCHAR NOT NULL,
+                marital_state VARCHAR NOT NULL,
+                password VARCHAR NOT NULL,
+                type_user INT NOT NULL,
+                created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW() NOT NULL,
+                updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW() NOT NULL
+            );
+
+            CREATE SEQUENCE IF NOT EXISTS public.user_id_seq
+                AS integer
+                START WITH 1
+                INCREMENT BY 1
+                NO MINVALUE
+                NO MAXVALUE
+                CACHE 1;
+
+            ALTER SEQUENCE IF EXISTS public.user_id_seq OWNED BY public.user.id;
+
+            ALTER TABLE ONLY public.user ALTER COLUMN id SET DEFAULT uuid_generate_v4();
+        `)
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.dropTable('user')
+    await queryRunner.query(`DROP TABLE IF EXISTS public.user;`)
+    await queryRunner.query(`DROP SEQUENCE IF EXISTS public.user_id_seq;`)
   }
 }
